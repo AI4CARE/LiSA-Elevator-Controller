@@ -18,4 +18,5 @@ For Debugging it can also be run directly using `node main.js`
 ## About
 This software was written based on information gathered by snooping the communication between the official management-application and the controller.
 It's part of Usecase 4 of [SMART FOREST 5G Clinics](https://zaf.th-deg.de/public/project/238) which funded by the German Federal Ministry for Digital and Transport.
-[Federal Ministry for Digital and Transport Logo](bdv.jpeg)
+
+<img src="bdv.jpeg" alt="Federal Ministry for Digital and Transport Logo" width="300">
