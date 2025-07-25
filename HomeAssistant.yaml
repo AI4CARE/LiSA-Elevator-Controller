@@ -1,0 +1,59 @@
+# use secrets.yaml as described in https://www.home-assistant.io/docs/configuration/secrets/
+# <server-ip> needs to be replaced with the IP of the server
+sensor:
+  - platform: rest
+    resource: http://<server-ip>:1666/api/status
+    authentication: basic
+    username: !secret elevator_user
+    password: !secret elevator_password
+    verify_ssl: false
+    unique_id: LiSA10_status_1
+    name: LiSA10_status_1
+    json_attributes:
+      - cabin_moving
+      - floor_loc
+      - door_stat
+      - queued_destinations
+    value_template: "{{ value_json._date }}"
+    force_update: false
+    scan_interval: 5
+  - platform: template
+    sensors:
+      lisa10_status_cabin_moving:
+        value_template: "{{ state_attr('sensor.LiSA10_status_1', 'cabin_moving')['format'] }}"
+      lisa10_status_floor:
+        value_template: "{{ state_attr('sensor.LiSA10_status_1', 'floor_loc')['format'] }}"
+      lisa10_status_door:
+        value_template: "{{ state_attr('sensor.LiSA10_status_1', 'door_stat')['format'] }}"
+      lisa10_status_queue:
+        value_template: "{{ state_attr('sensor.LiSA10_status_1', 'queued_destinations')['format'] }}"
+    
+rest_command:
+    lisa10_call_ug:
+      url: http://<server-ip>:1666/api/gotofloor
+      username: !secret elevator_user
+      password: !secret elevator_password
+      headers:
+        floornr: "1"
+      verify_ssl: false
+    lisa10_call_eg:
+      url: http://<server-ip>:1666/api/gotofloor
+      username: tcgraf
+      password: !secret elevator_password
+      headers:
+        floornr: "2"
+      verify_ssl: false
+    lisa10_call_1og:
+      url: http://<server-ip>:1666/api/gotofloor
+      username: !secret elevator_user
+      password: !secret elevator_password
+      headers:
+        floornr: "3"
+      verify_ssl: false
+    lisa10_call_2og:
+      url: http://<server-ip>:1666/api/gotofloor
+      username: !secret elevator_user
+      password: !secret elevator_password
+      headers:
+        floornr: "4"
+      verify_ssl: false
